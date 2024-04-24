@@ -37,8 +37,8 @@ def get_events() -> None:
 
     This function gets the most recent 10 events from the "Microsoft-Windows-PrintService/Operational"
     event log and checks if the event is from the last 3 minutes. If the event is from the last 3
-    minutes, it checks if the event id is 307 or 308 and if the PrinterName is not already in
-    the done list. If all the conditions are met, it copies the file and adds the PrinterName to
+    minutes, it checks if the event id is 307 or 308 and if the record/event ID is not already in
+    the done list. If all the conditions are met, it copies the file and adds the record/event ID to
     the done list.
 
     The events are in reverse chronological order, so the function starts from the end of the

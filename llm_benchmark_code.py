@@ -16,9 +16,9 @@ def get_code_metrics(path: str) -> dict:
     model = genai.GenerativeModel("gemini-pro")
 
     response = model.generate_content(
-        """I will give you code in text format you have to give output only in json with no other text apart from json.
-		The keys for json will be  Time Complexity, Space Complexity, Cyclomatic complexity, Code Smells and Security vulnerabilities.
-		You have to provide values to the keys.
+        f"""I will give you code in text format you have to give output only in json with no other text apart from json.
+		The keys for json will be Time Complexity, Space Complexity, Cyclomatic complexity, Code Smells and Security vulnerabilities.
+		You have to provide values to the keys by testing the code correctly and efficiently.
 		Here's code: {code_in_text}"""
     )
 
