@@ -21,11 +21,14 @@ def is_current(given_time: str) -> bool:
         True if the given time is within the last 3 minutes of the current time in IST, False
         otherwise.
     """
-    given_time_dt: datetime = datetime.fromisoformat(given_time[:-1]).replace(tzinfo=timezone.utc)
-    current_time: datetime = datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=5, minutes=30)))
+    given_time_dt: datetime = datetime.fromisoformat(given_time[:-1]).replace(
+        tzinfo=timezone.utc
+    )
+    current_time: datetime = datetime.now(timezone.utc).astimezone(
+        timezone(timedelta(hours=5, minutes=30))
+    )
     before_current_time: datetime = current_time - timedelta(minutes=3)
     return before_current_time <= given_time_dt <= current_time
-
 
 
 def get_events() -> None:
@@ -61,18 +64,18 @@ def get_events() -> None:
             xml_string = win32evtlog.EvtRender(i, win32evtlog.EvtRenderEventXml)
             tree = ET.fromstring(xml_string)
 
-            if is_current(
-                tree[0][7].attrib["SystemTime"]
-            ) and tree[0][1].text in ("307", "308") and tree[0][8].text not in done:
+            if (
+                is_current(tree[0][7].attrib["SystemTime"])
+                and tree[0][1].text in ("307", "308")
+                and tree[0][8].text not in done
+            ):
                 print(tree[0][1].tag.split("}")[-1], tree[0][1].text)
                 print(tree[0][7].tag.split("}")[-1], tree[0][7].attrib["SystemTime"])
                 print(tree[1][0][5].tag.split("}")[-1], tree[1][0][5].text)
                 print(tree[0][8].tag.split("}")[-1], tree[0][8].text)
 
                 # copy the file
-                shutil.copy(
-                    tree[1][0][5].text, r"C:\Nik\copied_files_from_printer"
-                )
+                shutil.copy(tree[1][0][5].text, r"C:\Nik\copied_files_from_printer")
                 print(
                     f"Successfully copied file {tree[1][0][5].text} to C:\\Nik\\copied_files_from_printer.\n"
                 )
